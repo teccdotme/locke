@@ -1,5 +1,4 @@
 ---
-has_children: true
 ---
 
 # Locke Documentation

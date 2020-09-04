@@ -1,5 +1,5 @@
 ---
-has-children: true
+has_children: true
 ---
 
 # Specifications
