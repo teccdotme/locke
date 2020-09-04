@@ -1,3 +1,0 @@
-# Naming
-
-Work In Progress
