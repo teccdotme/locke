@@ -1,8 +1,9 @@
 ---
 parent: Specification
-title: Lexing
 has_children: true
 ---
+
+# Lexing
 
 ## Token types
 
