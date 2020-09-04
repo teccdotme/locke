@@ -1,5 +1,5 @@
 ---
-parent: Specifications
+parent: Specification 1
 ---
 
 # Specification 1
