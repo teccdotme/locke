@@ -1,0 +1,1 @@
+message(STATUS "Module path: ${CMAKE_MODULE_PATH}")

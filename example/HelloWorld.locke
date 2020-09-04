@@ -1,0 +1,9 @@
+/*
+ * This example is designed without type inference, coming in a later version
+ * of the compiler.
+ * Another feature that's not yet implemented is default return values.
+ */
+function main(): int {
+    Console.println("Hello, world!");
+    return 0;
+}

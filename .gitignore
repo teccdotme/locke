@@ -1,0 +1,10 @@
+# Output files
+[Bb]in/
+[Oo]bj/
+cmake-build-*/
+build/
+
+# Project files
+.idea/
+.vs/
+*.iml
