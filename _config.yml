@@ -1,1 +1,17 @@
-theme: jekyll-theme-dinky
+remote_theme: pmarsceill/just-the-docs
+
+search_enabled: true
+
+aux_links:
+  "Locke repository":
+    - "//github.com/teccdotme/locke"
+
+footer_content: "Copyright &copy; 2020 tecc.me. Locke is licensed under the <a href=\"https://github.com/teccdotme/locke/tree/master/LICENSE.txt\">BSD 3-Clause license</a>. Documentation and specification are licensed under the <a href=\"https://creativecommons.org/licenses/by-nc-sa/4.0/\">CC BY-SA 4.0.</a>"
+last_edit_timestamp: true
+last_edit_time_format: "%d/%m/%Y %H:%M:%S (%Z)"
+
+gh_edit_link: true
+gh_edit_repository: "https://github.com/teccdotme/locke"
+gh_edit_branch: "gh-pages"
+gh_edit_view_mode: "tree"
+gh_edit_link_text: "Edit this page on GitHub."
