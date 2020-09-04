@@ -1,3 +1,7 @@
+---
+has_children: true
+---
+
 # Locke Documentation
 
 Welcome to the Locke Documentation!

@@ -1,16 +1,16 @@
+---
+parent: Lexing
+---
+
 # Keywords
 
-**Note**
-
-these values may be used as templates in definitions:
+**Note** these values may be used as templates in definitions:
 
 | Identifier   | Description/template                                         |
 | ------------ | ------------------------------------------------------------ |
 | `identifier` | An [identifier token](../Lexing.md#Identifier)               |
 | `mods`       | One or multiple modifier keywords. Different uses have different rules on what keywords can be used. |
 |              |                                                              |
-
-
 
 ## Functions
 
@@ -28,7 +28,6 @@ Definition:
 
 Valid modifiers are:
 
-
 | Modifier(s)         | Reference                                   | Other notes                                                  |
 | ------------------- | ------------------------------------------- | ------------------------------------------------------------ |
 | Access modifiers    | [Access modifiers](#Access_modifiers)       | For global functions (i.e. those declared outside of a class), `static`. By default, all functions are public. |
@@ -40,4 +39,3 @@ Valid modifiers are:
 ### `static`
 
 ## Execution modifiers
-

@@ -1,4 +1,8 @@
+---
+parent: Specifications
+---
 # Variables
+
 Variables in Locke are statically typed.
 
 A variable is denoted by the keyword `var`.
@@ -18,5 +22,6 @@ To give a variable an explicit type, add `:T` after the identifier, where T is t
 Next, declaring its value is done by `=val`. Once again, spaces are optional but recommended (`= val`).
 
 ## Examples
+
 * No type inferring `var x: int = 3`
-* Constant `const var x = 93.2` 
+* Constant `const var x = 93.2`
