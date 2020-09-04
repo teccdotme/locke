@@ -3,7 +3,7 @@ parent: Lexing
 grand_parent: Specification
 ---
 
-# Lexing / Operators
+# Operators
 
 ## Arithmetic
 
