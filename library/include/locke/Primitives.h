@@ -12,6 +12,5 @@ typedef struct Bool {
 } Bool;
 
 
-typedef template<typename T>
-struct Number {
+typedef struct Number {
 } Number;

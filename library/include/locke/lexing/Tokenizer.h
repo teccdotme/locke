@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
-#include <temila/lexing/Token.h>
+#include <locke/lexing/Token.h>
 
 using namespace std;
 
@@ -46,8 +46,9 @@ namespace locke::lexing {
         }
 
         TokenList Tokenize();
-    private:
+    protected:
 
-        Token Lex(const TokenList&, const string&, size_t);
+        TokenList Lex(TokenList, const string&);
+        TokenList OrderList(TokenList, string);
     };
 }
