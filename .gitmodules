@@ -1,3 +1,0 @@
-[submodule "library/lib/pcre2"]
-	path = library/lib/pcre2
-	url = https://github.com/rurban/pcre
