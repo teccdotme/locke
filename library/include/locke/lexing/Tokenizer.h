@@ -23,6 +23,7 @@ namespace locke::lexing {
         Token Current();
         Token Next();
         Token Last();
+        Token Get(size_t);
 
         void operator +=(Token t);
 

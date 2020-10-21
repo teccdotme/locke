@@ -10,7 +10,3 @@ typedef struct Bool {
 
     bool ToBoolean() const { return value == 0x1; }
 } Bool;
-
-
-typedef struct Number {
-} Number;

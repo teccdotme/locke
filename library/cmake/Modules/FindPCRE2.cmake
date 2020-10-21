@@ -19,20 +19,17 @@
 # Custom part: build pcre2
 # incase it's not built yet
 message(STATUS "Checking PCRE2 build..")
-set(libdir ${CMAKE_CURRENT_SOURCE_DIR}/lib/pcre2)
-EXECUTE_PROCESS(
-        COMMAND mkdir ${libdir}/build
-        COMMAND cmake -S ${libdir} -B ${libdir}/build
-        COMMAND make -C ${libdir}/build
-        COMMAND cd ${CMAKE_CURRENT_SOURCE_DIR}
-)
 
 # Look for the header file.
-FIND_PATH(PCRE2_INCLUDE_DIR NAMES pcre2.h HINTS ${libdir}/build)
+FIND_PATH(PCRE2_INCLUDE_DIR NAMES pcre2.h)
 
 # Look for the library.
-FIND_LIBRARY(PCRE2_LIBRARY_RELEASE NAMES pcre2-8 HINTS ${libdir}/build)
-FIND_LIBRARY(PCRE2_LIBRARY_DEBUG NAMES pcre2-8d HINTS ${libdir}/build)
+FIND_LIBRARY(PCRE2_LIBRARY_RELEASE
+        NAMES pcre2-8
+        )
+FIND_LIBRARY(PCRE2_LIBRARY_DEBUG
+        NAMES pcre2-8d
+        )
 
 # Handle the QUIETLY and REQUIRED arguments and set PCRE2_FOUND to TRUE if all listed variables are TRUE.
 INCLUDE(FindPackageHandleStandardArgs)

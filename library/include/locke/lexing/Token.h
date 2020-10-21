@@ -17,7 +17,6 @@ namespace locke::lexing {
     class TokenType {
     protected:
         regex expr;
-        vector<string> str;
 
         bool useRegex = false;
     public:
@@ -51,6 +50,7 @@ namespace locke::lexing {
     TokenType KEYWORD = TokenType(vector<string>{u8"function", u8"var"});
     TokenType NUMBER_LITERAL = TokenType(u8"\\d+(\\.\\d+(d|f|i|l)?)?");
     TokenType NULL_LITERAL = TokenType(u8"null");
+    TokenType IDENTIFIER = TokenType(u8"");
 
     struct Token {
         TokenType type;

@@ -8,11 +8,12 @@ set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/Modules/)
 include(Debug)
 
 set(HEADERS
-        regex Definitions Primitives
+        regex util Definitions Primitives
         # lexing
         lexing/Token lexing/Tokenizer
+        parsing/SyntaxTree parsing/Node parsing/Parser
         )
-set(SOURCES Primitives lexing/Tokenizer lexing/Token)
+set(SOURCES lexing/Tokenizer lexing/Token)
 
 foreach(HEADER IN LISTS HEADERS)
     set(SRC ${SRC} include/locke/${HEADER}.h)
@@ -26,3 +27,4 @@ include_directories(include)
 
 include(Libraries)
 target_link_libraries(locke ${LIBRARIES})
+include_directories(${INCLUDE_DIRS})

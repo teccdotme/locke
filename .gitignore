@@ -3,6 +3,8 @@
 [Oo]bj/
 cmake-build-*/
 build/
+out/
+.vscode/
 
 # Project files
 .idea/

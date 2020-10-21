@@ -6,6 +6,21 @@
 using namespace std;
 
 namespace locke::lexing {
+    TokenList DoOps(TokenList list, string s, TokenType type) {
+        TokenMatch* occurrences = type.GetOccurrences(s);
+        size_t length = arraySize(occurrences);
+
+        // loops through each match
+        for (size_t i = 0; i < length; ++i) {
+            TokenMatch occurrence = occurrences[i];
+            size_t length = occurrence.end - occurrence.begin;
+            string* source = (string*) malloc(length * sizeof(jp::Char));
+            s.copy((char*) source->c_str(), length, occurrence.begin);
+            list += Token{type, (const string&) source, i};
+        }
+        return list;
+    }
+
     TokenList Tokenizer::Lex(TokenList list, const string& s) {
         // lexes all occurrences of all tokens in order
         // a bit repetitive, but hey at least i can avoid array hell
@@ -40,7 +55,16 @@ namespace locke::lexing {
     }
 
     TokenList Tokenizer::OrderList(TokenList original, string content) {
-        original.First()
+        vector<int> index;
+
+        for (size_t i = 0; i < original.Size(); ++i) {
+            Token ct = original.Get(i);
+            // TODO insert at begin position
+        }
+
+        // TODO sort using quicksort
+
+        // TODO return new tokenlist
     }
 
     void TokenList::operator+=(Token t) {
@@ -48,19 +72,8 @@ namespace locke::lexing {
         index++;
     }
 
-    TokenList DoOps(TokenList list, string s, TokenType type) {
-        TokenMatch* occurrences = type.GetOccurrences(s);
-        size_t length = arraySize(occurrences);
-
-        // loops through each match
-        for (size_t i = 0; i < length; ++i) {
-            TokenMatch occurrence = occurrences[i];
-            size_t length = occurrence.end - occurrence.begin;
-            string* source = (string*) malloc(length * sizeof(jp::Char));
-            s.copy((char*) source->c_str(), length, occurrence.begin);
-            list += Token{type, (const string&) source, i};   
-        }
-        return list;
+    Token TokenList::Get(size_t index) {
+        return tokens[index];
     }
 
 }
