@@ -97,7 +97,7 @@ In this context, there are a few variables:
 * `v` is a value, which is mapped to a key.
 * `itr` is an iterator of any type.
 
-### Operators
+### General data
 
 * Accessor `[k]`
 
