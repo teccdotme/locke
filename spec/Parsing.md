@@ -3,7 +3,7 @@ parent: Specification
 has_children: true
 ---
 
-# Lexing
+# Parsing
 
 This document specifies how an implementation of Locke should parse tokens.
 

@@ -1,5 +1,5 @@
 ---
-parent: Lexing
+parent: Parsing
 grand_parent: Specification
 ---
 
