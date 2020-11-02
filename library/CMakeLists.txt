@@ -4,16 +4,16 @@ set(CMAKE_CXX_STANDARD 17)
 project(locke)
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/Modules/)
 
+option(BUILD_SHARED_LIBS ON)
+
 # uncomment for debug messages
 include(Debug)
 
-set(HEADERS
-        regex util Definitions Primitives
-        # lexing
-        lexing/Token lexing/Tokenizer
-        parsing/SyntaxTree parsing/Node parsing/Parser
+set(GLOBAL_FILES )
+
+set(HEADERS ${GLOBAL_FILES})
+set(SOURCES ${GLOBAL_FILES}
         )
-set(SOURCES lexing/Tokenizer lexing/Token)
 
 foreach(HEADER IN LISTS HEADERS)
     set(SRC ${SRC} include/locke/${HEADER}.h)
@@ -22,9 +22,10 @@ foreach(SOURCE IN LISTS SOURCES)
     set(SRC ${SRC} src/${SOURCE}.cpp)
 endforeach()
 
-add_library(locke SHARED ${SRC})
-include_directories(include)
+add_library(locke ${SRC})
+target_include_directories(locke PUBLIC include)
 
 include(Libraries)
-target_link_libraries(locke ${LIBRARIES})
-include_directories(${INCLUDE_DIRS})
+# target_link_libraries(locke ${LIBRARIES})
+target_link_libraries(locke ${STATIC_LIBRARIES})
+target_include_directories(locke PUBLIC ${INCLUDE_DIRS})

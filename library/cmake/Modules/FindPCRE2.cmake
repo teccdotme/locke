@@ -17,7 +17,7 @@
 # PCRE2_FOUND	- True if pcre found.
 
 # Custom part: build pcre2
-# incase it's not built yet
+# in the case it's not built yet
 message(STATUS "Checking PCRE2 build..")
 
 # Look for the header file.
