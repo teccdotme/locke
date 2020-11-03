@@ -47,7 +47,19 @@ A sequence of characters that denotes a functionality.
 
 Refer to [Keywords](./Lexing/Keywords.md) for a list of keywords, their intended function and usage.
 
-Keywords are under string literals.
+Keywords are under comments.
+
+### Comments
+
+An ignored string of characters, numbers or otherwise.
+
+There are 2 types of comments: single-line comments, and multi-line comments.
+
+A single-line comment is preceeded by double forward slashes (`//`) on each line that should be commented out.
+
+A multi-line comment is preceeded by a forward slash and a star (`/*`), and ended with a star and a forward slash (`*/`).
+
+Comments are prioritized under strings.
 
 ### Primitive literals
 

@@ -7,5 +7,5 @@ parent: Specification
 | Suffix       | Description             |
 | ------------ | ----------------------- |
 | `.locke`     | Source code file        |
-| `.lb`        | Binary output of source |
+| `.lo`        | Binary output of source |
 | `.lib`       | Locke library           |
