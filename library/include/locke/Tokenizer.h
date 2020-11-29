@@ -3,12 +3,24 @@
 #include <string>
 #include <locke/Util.h>
 
-#define LOCKE_STRING_TYPE "string"
+// using verbose strings because it makes debugging messages way clearer
+// granted, not implemented yet
+#define LOCKE_UNKNOWN_TYPE "unknown"
+#define LOCKE_STRING_TYPE  "string"
+#define LOCKE_COMMENT_TYPE "comment"
+#define LOCKE_CHAR_TYPE    "character"
+#define LOCKE_NUMBER_TYPE  "number"
+#define LOCKE_ID_TYPE      "identifier"
 
 namespace locke {
     struct Token {
         string_t content;
         string_t type;
+
+        Token() {
+            content = "";
+            type = LOCKE_UNKNOWN_TYPE;
+        }
     };
     struct TokenizerOptions {
         bool rememberComments = false;

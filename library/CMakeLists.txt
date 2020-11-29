@@ -2,14 +2,13 @@ cmake_minimum_required(VERSION 3.15)
 set(CMAKE_CXX_STANDARD 17)
 
 project(locke)
-set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/Modules/)
 
 option(BUILD_SHARED_LIBS ON)
 
 # uncomment for debug messages
 include(Debug)
 
-set(GLOBAL_FILES )
+set(GLOBAL_FILES Tokenizer Util)
 
 set(HEADERS ${GLOBAL_FILES})
 set(SOURCES ${GLOBAL_FILES}
@@ -27,5 +26,5 @@ target_include_directories(locke PUBLIC include)
 
 include(Libraries)
 # target_link_libraries(locke ${LIBRARIES})
-target_link_libraries(locke ${STATIC_LIBRARIES})
+target_link_libraries(locke ${LIBRARIES})
 target_include_directories(locke PUBLIC ${INCLUDE_DIRS})

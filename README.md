@@ -4,7 +4,25 @@ The **Locke Programming Language** is a statically-typed, object-oriented and mo
 
 > The amount of revisions to the grammar I made is uncanny. 
 
-If you like the language and/or feel kind, please consider donating to me.
+## Specification
+
+Because Locke is intended to be easy to implement for anyone, it has a specification.
+
+This specification can be found on [this page](http://locke.tecc.me/spec/); feedback is greatly appreciated! 
+
+## Contributors
+
+I'm currently looking for additional contributors for this project as developing it is a hassle.
+
+Currently, the main needs are:
+
+- Testers; I need bugs to fix so that I someday can roll out a "stable" release.
+
+- Developers. I know I am a developer, but I need someone to do the standard library/CLI development.
+
+- Writers; responsible for writing documentation, examples, guides, whatever., with a consistent style, because I have none.
+
+If you want to help just shoot me a message on Discord: `tecc#0001`.
 
 ## License
 
