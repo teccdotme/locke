@@ -8,9 +8,16 @@ option(BUILD_SHARED_LIBS ON)
 # uncomment for debug messages
 include(Debug)
 
-set(GLOBAL_FILES Tokenizer Util)
+set(GLOBAL_FILES
+        Tokenizer
+        Util
+        internal/TokenizationUtils
+        )
 
-set(HEADERS ${GLOBAL_FILES})
+set(HEADERS ${GLOBAL_FILES}
+        TokenTypes
+        )
+
 set(SOURCES ${GLOBAL_FILES}
         )
 
@@ -22,9 +29,7 @@ foreach(SOURCE IN LISTS SOURCES)
 endforeach()
 
 add_library(locke ${SRC})
-target_include_directories(locke PUBLIC include)
 
-include(Libraries)
+set(INCLUDE_DIRS include)
 # target_link_libraries(locke ${LIBRARIES})
-target_link_libraries(locke ${LIBRARIES})
 target_include_directories(locke PUBLIC ${INCLUDE_DIRS})

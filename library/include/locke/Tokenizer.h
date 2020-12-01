@@ -3,24 +3,12 @@
 #include <string>
 #include <locke/Util.h>
 
-// using verbose strings because it makes debugging messages way clearer
-// granted, not implemented yet
-#define LOCKE_UNKNOWN_TYPE "unknown"
-#define LOCKE_STRING_TYPE  "string"
-#define LOCKE_COMMENT_TYPE "comment"
-#define LOCKE_CHAR_TYPE    "character"
-#define LOCKE_NUMBER_TYPE  "number"
-#define LOCKE_ID_TYPE      "identifier"
-
 namespace locke {
     struct Token {
         string_t content;
         string_t type;
 
-        Token() {
-            content = "";
-            type = LOCKE_UNKNOWN_TYPE;
-        }
+        Token();
     };
     struct TokenizerOptions {
         bool rememberComments = false;
@@ -28,12 +16,59 @@ namespace locke {
         TokenizerOptions();
     };
 
+    struct TokenizerError {
+        size_t line, col;
+        string_t error;
+
+        TokenizerError(size_t line, size_t col, string_t error);
+    };
+
+
+    struct TokenizerState {
+        TokenizerOptions* opts;
+        std::vector<Token*> previousTokens;
+        std::vector<TokenizerError> errors;
+        Token* current;
+
+        // the current character
+        size_t index = 0;
+        size_t length = 0;
+        // metadata like line and column
+        // will be used for error messages
+        size_t line = 0;
+        size_t col = 0;
+
+        TokenizerState(TokenizerOptions* opts);
+
+        // create errors, debugging
+        void error(string_t message);
+
+        // pushing tokens
+        // these all do the same thing:
+        // push the current token into the previousTokens vector and create a new token
+        void pushToken();
+        void pushToken(string_t type);
+        void pushToken(string_t type, string_t content);
+
+        // token manipulation
+        void append(LOCKE_CHAR_T c);
+        size_t contentLength();
+
+        bool isLast() const;
+        bool isUnknown();
+    };
+
+    struct TokenizerResult {
+        std::vector<Token> tokens;
+        std::vector<TokenizerError> errors;
+    };
+
     /**
      * Tokenize a string.
      * @param content The string to tokenize.
      * @return A vector of tokens.
      */
-    std::vector<Token> tokenize(const string_t& content, TokenizerOptions options);
+    TokenizerResult tokenize(const string_t& content, TokenizerOptions options = TokenizerOptions());
     /**
      * Separates
      * @param source

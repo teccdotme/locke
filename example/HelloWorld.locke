@@ -1,4 +1,6 @@
+use io;
+
 function main(): int {
-    Console.println("Hello, world!");
+    io.println("Hello, world!");
     return 0;
 }

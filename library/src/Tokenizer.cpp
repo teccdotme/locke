@@ -1,93 +1,153 @@
 #include <locke/Tokenizer.h>
+#include <locke/TokenTypes.h>
+#include <locke/internal/TokenizationUtils.h>
+
+#include <utility>
 
 using namespace locke;
 
-// stores the state of the tokenizer
-struct TokenizerState {
-    TokenizerOptions* opts;
-    std::vector<Token*> previousTokens;
-    Token* current;
+TokenizerState::TokenizerState(TokenizerOptions* opts) {
+    this->opts = opts;
+    this->previousTokens = std::vector<Token*>();
+    this->errors = std::vector<TokenizerError>();
+    current = new Token();
+}
 
-    // the current character
-    size_t index = 0;
-    // metadata like line and column
-    // will be used for error messages
-    size_t line = 0;
-    size_t col = 0;
+void TokenizerState::error(string_t message) {
+    errors.emplace_back(line, col, std::move(message));
+}
+void TokenizerState::pushToken() {
+    if (current->type == TYPE_UNKNOWN && current->content.empty())
+        return;
+    previousTokens.push_back(current);
+    current = new Token();
+}
+void TokenizerState::pushToken(string_t type) {
+    pushToken();
+    current->type = type;
+}
+void TokenizerState::pushToken(string_t type, string_t content) {
+    pushToken(type);
+    current->content = content;
+}
+void TokenizerState::append(LOCKE_CHAR_T c) {
+    current->content += c;
+}
+size_t TokenizerState::contentLength() {
+    return current->content.length();
+}
 
-    TokenizerState(TokenizerOptions* opts) {
-        this->opts = opts;
-        this->previousTokens = std::vector<Token*>();
-        current = new Token();
-    }
-    // deconstructor because memory
-    ~TokenizerState() {
-        previousTokens.clear();
-        free(&previousTokens);
-        free(current);
-    }
+bool TokenizerState::isLast() const {
+    return index == length - 1;
+}
 
-    // pushing tokens
-    // these all do the same thing
-    void pushToken() {
-        previousTokens.push_back(current);
-        current = new Token();
-    }
-    void pushToken(string_t type) {
-        pushToken();
-        current->type = type;
-    }
-    void pushToken(string_t type, string_t content) {
-        pushToken(type);
-        current->content = content;
-    }
-};
+bool TokenizerState::isUnknown() {
+    return current->type == TYPE_UNKNOWN;
+}
+
+// actual tokenizer
 
 void interpret(LOCKE_CHAR_T character, TokenizerState& state) {
     // check if the current read token is a string
-    if (state.current->type == LOCKE_STRING_TYPE) {
-        // check if end of string
+    if (state.current->type == TYPE_STRING) {
+        // check if previous character is escape character
+        size_t charIndex = state.contentLength() - 1;
+        if (state.current->content[charIndex] == '\\') {
+            switch (character) {
+                case '\\':
+                case '"':
+                    state.current->content[charIndex] = character;
+                    break;
+                default:
+                    state.error("Invalid escape character");
+            }
+            goto stringLastChecks;
+        }
+        // check if current char is double quote
         if (character == '"') {
-            // if end of string, push token
             state.pushToken();
+            return;
         } else // otherwise just append the character
-            state.current->content.append(&character);
+        {
+            state.append(character);
+        }
+        stringLastChecks:
+        if (state.isLast()) {
+            state.error("String not closed.");
+        }
+
+
         // return because we're done with appending/ending the string
         return;
     }
-    // check if character is a double quote
-    if (character == '"') {
-        // create a new string & return because
-        // next interpretation will take care of string
-        state.pushToken(LOCKE_STRING_TYPE);
+
+    // check if inside character
+    if (state.current->type == TYPE_CHAR) {
+        size_t length = state.contentLength();
+        if (state.current->content == "\\") {
+            // escaped character, append
+            state.append(character);
+        }
+        // if end of character
+        if (character == '\'') {
+            // check if token is empty
+            if (length < 1) {
+                state.error("No character inside character token");
+            }
+            if (state.current->content[0] != '\\' && length > 1)
+                state.error("Too long character");
+            state.pushToken();
+            return;
+        }
+        if (state.isLast())
+            state.error("Character not closed.");
+    }
+
+    // check if character is a double quote or single quote
+    if (character == '"' || character == '\'') {
+        // create a new token & return because
+        // next interpretation will take care of content
+        // type will be char if character is single quote and string otherwise
+        state.pushToken(character == '\'' ? TYPE_CHAR : TYPE_STRING);
         return;
     }
-    state.current->content.append(&character);
-    if (state.current->content == "//")
-        state.current->type = LOCKE_COMMENT_TYPE;
+    if (character == ' ') {
+        if (state.isUnknown()) {
+            if (analyzeForKeywords(state.current->content)) {
+                state.current->type = TYPE_KEYWORD;
+                state.pushToken();
+            }
+        }
+        return;
+    }
+    state.append(character);
 }
 
-std::vector<Token> locke::tokenize(const string_t& content, TokenizerOptions opts = TokenizerOptions()) {
+TokenizerResult locke::tokenize(const string_t& content, TokenizerOptions opts) {
     // initialise state
     TokenizerState state{&opts};
     // get size of content
     // will be used a few times
-    int csize = content.size();
+    size_t csize = content.size();
+    state.length = csize;
     state.line = 1;
-    for (int i = 0; i < csize; i++) {
+    for (size_t i = 0; i < csize; i++) {
         auto c = content[i];
+        state.index = i;
         if (c == '\n') {
             state.col = 0;
             state.line++;
         } else state.col++;
         interpret(c, state);
     }
-    state.pushToken();
     std::vector<Token> tokens;
     for (Token* token : state.previousTokens)
         tokens.push_back(*token);
 
-    return tokens;
+    TokenizerResult res{};
+    res.tokens = tokens;
+    res.errors = state.errors;
+    return res;
 }
 
 std::vector<string_t> locke::separate(const string_t& source) {
@@ -107,3 +167,14 @@ std::vector<string_t> locke::separate(const string_t& source) {
 }
 
 locke::TokenizerOptions::TokenizerOptions() = default;
+
+TokenizerError::TokenizerError(size_t line, size_t col, string_t error) {
+    this->line = line;
+    this->col = col;
+    this->error = std::move(error);
+}
+
+Token::Token() {
+    content = "";
+    type = TYPE_UNKNOWN;
+}
