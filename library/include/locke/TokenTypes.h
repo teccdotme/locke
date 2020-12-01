@@ -2,13 +2,14 @@
 
 // using verbose strings because it makes debugging messages way clearer
 // granted, not implemented yet
-#define TYPE_UNKNOWN "unknown"
-#define TYPE_STRING  "string"
-#define TYPE_COMMENT "comment"
-#define TYPE_CHAR    "character"
-#define TYPE_NUMBER  "number"
-#define TYPE_ID      "identifier"
-#define TYPE_KEYWORD "keyword"
+#define TYPE_UNKNOWN  "unknown"
+#define TYPE_STRING   "string"
+#define TYPE_COMMENT  "comment"
+#define TYPE_CHAR     "character"
+#define TYPE_NUMBER   "number"
+#define TYPE_OPERATOR "operator"
+#define TYPE_ID       "identifier"
+#define TYPE_KEYWORD  "keyword"
 
 // HERE BE KEYWORDS
 // declaration keywords

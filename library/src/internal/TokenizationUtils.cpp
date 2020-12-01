@@ -18,3 +18,13 @@ bool analyzeForKeywords(string_t content) {
 
     return false;
 }
+
+bool analyzeForOperators(string_t content) {
+    // more verbose, makes it cleaner
+    if (content == OPERATOR_MULTIPLICATION || content == OPERATOR_DIVISION)
+        return true;
+    if (content == OPERATOR_ADDITION || content == OPERATOR_SUBTRACTION)
+        return true;
+
+    return true;
+}

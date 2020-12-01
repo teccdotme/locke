@@ -117,6 +117,10 @@ void interpret(LOCKE_CHAR_T character, TokenizerState& state) {
                 state.current->type = TYPE_KEYWORD;
                 state.pushToken();
             }
+            if (analyzeForOperators(state.current->content)) {
+                state.current->type = TYPE_OPERATOR;
+                state.pushToken();
+            }
         }
         return;
     }
