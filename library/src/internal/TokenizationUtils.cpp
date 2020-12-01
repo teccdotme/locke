@@ -26,5 +26,5 @@ bool analyzeForOperators(string_t content) {
     if (content == OPERATOR_ADDITION || content == OPERATOR_SUBTRACTION)
         return true;
 
-    return true;
+    return false;
 }
